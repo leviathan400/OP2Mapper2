@@ -1,0 +1,37 @@
+// IPluginBase: the base interface that all mapper plugins must implement
+// in a coclass named "CPlugin", and the enums that go with it
+
+[
+	odl,
+	uuid(BA92243E-544C-451F-B0B0-52FFA50FCC5F),
+	helpstring("OP2Mapper plugin base interface. All plugins must implement this in a coclass named CPlugin.")
+]
+interface IPluginBase : IUnknown
+{
+	// onLoad: called when the mapper is loading the plugin.
+	// returns one of PLUG_LOAD_ERROR.
+	[helpstring("called when the mapper is loading the plugin")]
+	HRESULT onLoad(
+		[in] PLUG_LOAD_REASON reasonForLoad, // Reason this plugin was loaded (PLUG_LOAD_REASON)
+		[in, out] IAppObject **ppvAppObject, // ptr to a mapper app object
+		[out, retval] PLUG_LOAD_ERROR *errCode);
+	// onUnload: called when the mapper is unloading the plugin.
+	// returns nothing.
+	[helpstring("called when the mapper is unloading the plugin")]
+	HRESULT onUnload(
+		[in] PLUG_UNLOAD_REASON reasonForUnload); // Reason the plugin is being unloaded (PLUG_UNLOAD_REASON)
+	// onExecute: called when the plugin is being asked to perform an operation
+	// returns the result of the operation, one of PLUG_EXEC_RESULT
+	[helpstring("called when the plugin is being asked to perform an operation")]
+	HRESULT onExecute(
+		[in] PLUG_EXEC_TYPE opType, // type of operation - is it user generated? (PLUG_EXEC_TYPE)
+		[in, out] long *opData, // pointer to data that is associated with this operation
+		[out, retval] PLUG_EXEC_RESULT *opResult);
+	// onEvent: called when an event is generated within the mapper, such as file open, file close, etc
+	// returns PLUG_EVENT_RESULT
+	[helpstring("called when an event is generated within the mapper")]
+	HRESULT onEvent(
+		[in] PLUG_EVENT_TYPE eventType, // type of event (PLUG_EVENT_TYPE)
+		[in, out] long *eventData, // pointer to data associated with the event
+		[out, retval] PLUG_EVENT_RESULT *eventResult);
+};

@@ -1,0 +1,55 @@
+// IAppObject: the interface that the mapper implements in a class
+// and passes a pointer to it at plugin startup.
+
+[
+	odl,
+	uuid(B9C10830-62FD-496A-8FCD-10544CDC61E9),
+	helpstring("App Object interface returned by the mapper.")
+]
+interface IAppObject : IUnknown
+{
+	// <All Versions> Returns the version of the library/mapper
+	// in number format (200 = 2.0.0)
+	[helpstring("Returns the version of the mapper in number format")]
+	HRESULT GetLibVersion([out, retval] long *version);
+
+	// <All Versions> Produces a shell error
+	[helpstring("Raises a shell error")]
+	HRESULT RaiseError([in] BSTR desc);
+
+	// <All Versions> Attempts to enter privileged mode, the user may need
+	// to authorize this, returns 0 on failure
+	[helpstring("Attempts to enter privileged mode")]
+	HRESULT EnterPrivilegedMode([out, retval] long *result);
+
+	// <All Versions> Leaves privileged mode
+	[helpstring("Leaves privileged mode")]
+	HRESULT LeavePrivilegedMode();
+
+	// <All Versions> Installs a menu item
+	[helpstring("Installs a menu item")]
+	HRESULT InstallMenuItem([in] BSTR strName, [in] long lngCode);
+
+	// <All Versions> Installs an event hook
+	[helpstring("Installs an event hook")]
+	HRESULT InstallEventHook([in] long lngEventType, [in] long lngCode);
+
+	// <All Versions> Asks a yes/no question to the user
+	// Returns 1 on Yes, 0 on No
+	[helpstring("Asks a yes/no question to the user")]
+	HRESULT YesNoBox([in] BSTR strMsg, [out, retval] long *result);
+
+	// <All Versions, Privileged> Gets the MapFile object from the currently active map
+	// so the plugin can work on it, returns Nothing if failed
+	[helpstring("Gets the MapFile object from the current map. Privileged")]
+	HRESULT GetMapObject([out, retval] IDispatch **ppvObject);
+
+	// <All Versions> Redraws the current map
+	// returns 0 if failed (no active map)
+	[helpstring("Redraws the active map")]
+	HRESULT RedrawMap([out, retval] long *result);
+
+	// <All Versions> Changes the currently open editing tool
+	[helpstring("Changes the current map editing tool")]
+	HRESULT ChangeMapTool([in] TOOL_MODE toolMode);
+};

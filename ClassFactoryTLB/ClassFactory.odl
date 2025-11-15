@@ -1,0 +1,11 @@
+[
+	uuid(F502627D-004F-4C62-88FB-165DF601F0F1),
+	helpstring("IClassFactory type library"),
+	version(1.0)
+]
+library IClassFactory_TLB
+{
+	#include "Wintypes.odl"
+	#include "IUnknown.odl"
+	#include "IClassFactory.odl"
+}

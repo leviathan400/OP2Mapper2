@@ -1,0 +1,67 @@
+typedef enum enumPLUGLOADERROR
+{
+	PLE_OK = 0, // the plugin loaded ok
+	PLE_NOAUTOSTART, // plugin must not be loaded automatically at startup
+	PLE_SYSERROR, // system error occurred, call GetLastError for details
+	PLE_USERERROR, // user defined error occurred within the plugin
+	PLE_UNDEF // undefined condition (not used)
+} PLUG_LOAD_ERROR;
+
+typedef enum enumPLUGLOADREASON
+{
+	PLR_REQUESTED = 0, // the plugin loaded normally on request
+	PLR_AUTOSTART, // plugin is being auto loaded at mapper start time
+	PLR_UNDEF // undefined reason (not used)
+} PLUG_LOAD_REASON;
+
+typedef enum enumPLUGUNLOADREASON
+{
+	PUR_REQUESTED = 0, // the plugin unloaded normally on request
+	PUR_APPEXIT, // plugin is being unloaded because app is exiting
+	PUR_UNDEF // undefined reason (not used)
+} PLUG_UNLOAD_REASON;
+
+typedef enum enumPLUGEXECTYPE
+{
+	PET_MENUSEL = 0, // plugin invoked by menu item
+	PET_UNDEF // undefined type (not used)
+} PLUG_EXEC_TYPE;
+
+typedef enum enumPLUGEXECRESULT
+{
+	PER_OK = 0, // execute operation ok
+	PER_NOPRIVS, // needs privileged mode to operate
+	PER_SYSERROR, // system error occurred (GetLastError)
+	PER_USERERROR, // user defined error in plugin
+	PER_UNDEF // undefined result
+} PLUG_EXEC_RESULT;
+
+typedef enum enumPLUGEVENTTYPE
+{
+	PVT_MAP_OPEN = 0, // map opened
+	PVT_MAP_CLOSE, // map closed
+	PVT_MAP_TOOL_CHANGE, // map tool change
+	PVT_MAP_TOOL_ACTION, // map tool has had action invoked
+	PVT_MAP_ACTION, // map itself has had action
+	PVT_UNDEF // undefined
+} PLUG_EVENT_TYPE;
+
+typedef enum enumPLUGEVENTRESULT
+{
+	PVR_OK = 0, // event ok
+	PVR_NOPRIVS, // needs privileged mode to operate
+	PVR_SYSERROR, // system error
+	PVR_USERERROR, // user error
+	PVR_UNDEF // undefined
+} PLUG_EVENT_RESULT;
+
+typedef enum enumTOOLMODE
+{
+	TM_PLACETILE = 0, // place tile
+	TM_PLACETILEGROUP, // place tile group
+	TM_PLACEUNIT, // place unit
+	TM_CELLTYPEEDIT, // cell type edit
+	TM_INFOVIEW, // info viewer
+	TM_UNDEF // undefined
+} TOOL_MODE;
+

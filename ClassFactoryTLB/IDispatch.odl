@@ -1,0 +1,27 @@
+[
+	odl,
+	uuid(00020400-0000-0000-C000-000000000046)
+]
+interface IDispatch : IUnknown {
+	HRESULT _stdcall GetTypeInfoCount([out] unsigned int* pctinfo);
+	HRESULT _stdcall GetTypeInfo(
+		[in] unsigned int itinfo, 
+		[in] unsigned long lcid, 
+		[out] void** pptinfo);
+    HRESULT _stdcall GetIDsOfNames(
+		[in] GUID* riid, 
+		[in] char** rgszNames, 
+		[in] unsigned int cNames, 
+		[in] unsigned long lcid, 
+		[out] long* rgdispid);
+    HRESULT _stdcall Invoke(
+		[in] long dispidMember, 
+		[in] GUID* riid, 
+		[in] unsigned long lcid, 
+		[in] unsigned short wFlags, 
+		[in] DISPPARAMS* pdispparams, 
+		[out] VARIANT* pvarResult, 
+		[out] EXCEPINFO* pexcepinfo, 
+		[out] unsigned int* puArgErr);
+};
+

@@ -1,0 +1,17 @@
+-= OP2Mapper core 2 =-
+
+© 2002-2004 by the Outpost Universe Development Team.
+
+Outpost 2 is © 1997 by Dynamix.
+This product includes software developed by vbAccelerator (http://vbaccelerator.com/).
+
+-= Individual Credits =-
+
+Application Engine:
+Interface design: op2hacker
+MAP, VOL, tileset engine: Hooman
+Script / tech tree parser: op2hacker
+
+Beta Testing:
+Hooman, MoogleKupoHaX, Eddy-B, countless others..
+Thank you to all who actually tried to use this thing

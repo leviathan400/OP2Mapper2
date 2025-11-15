@@ -1,0 +1,16 @@
+[
+	uuid(A1D6BF13-4AE3-4C7D-84BA-3265BBF18188),
+	helpstring("OP2Mapper Plugin typelib"),
+	version(1.0)
+]
+library MapperPlugin_TLB
+{
+	importlib("stdole2.tlb");
+
+	#include "Wintypes.odl"
+	#include "PluginEnums.odl"
+	#include "IAppObject.odl"
+	#include "IPluginBase.odl"
+};
+
+
