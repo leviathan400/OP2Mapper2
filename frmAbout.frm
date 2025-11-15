@@ -5,7 +5,7 @@ Begin VB.Form frmAbout
    ClientHeight    =   4290
    ClientLeft      =   45
    ClientTop       =   330
-   ClientWidth     =   5865
+   ClientWidth     =   6510
    ClipControls    =   0   'False
    BeginProperty Font 
       Name            =   "Verdana"
@@ -22,7 +22,7 @@ Begin VB.Form frmAbout
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   4290
-   ScaleWidth      =   5865
+   ScaleWidth      =   6510
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Tag             =   "About Mapper2"
@@ -36,7 +36,7 @@ Begin VB.Form frmAbout
       Tag             =   "App Description"
       Text            =   "frmAbout.frx":000C
       Top             =   840
-      Width           =   4605
+      Width           =   5300
    End
    Begin VB.PictureBox picIcon 
       AutoSize        =   -1  'True
@@ -46,7 +46,7 @@ Begin VB.Form frmAbout
       HasDC           =   0   'False
       Height          =   480
       Left            =   240
-      Picture         =   "frmAbout.frx":0186
+      Picture         =   "frmAbout.frx":0187
       ScaleHeight     =   480
       ScaleMode       =   0  'User
       ScaleWidth      =   480
@@ -60,7 +60,7 @@ Begin VB.Form frmAbout
       Caption         =   "OK"
       Default         =   -1  'True
       Height          =   345
-      Left            =   4245
+      Left            =   4900
       TabIndex        =   0
       Tag             =   "OK"
       Top             =   3345
@@ -69,7 +69,7 @@ Begin VB.Form frmAbout
    Begin VB.CommandButton cmdSysInfo 
       Caption         =   "&System Info..."
       Height          =   345
-      Left            =   4260
+      Left            =   4900
       TabIndex        =   1
       Tag             =   "&System Info..."
       Top             =   3795
@@ -99,7 +99,7 @@ Begin VB.Form frmAbout
       BorderStyle     =   6  'Inside Solid
       Index           =   1
       X1              =   105
-      X2              =   5537
+      X2              =   6360
       Y1              =   3150
       Y2              =   3150
    End
@@ -122,14 +122,14 @@ Begin VB.Form frmAbout
       Width           =   4575
    End
    Begin VB.Label lblDisclaimer 
-      Caption         =   $"frmAbout.frx":0A50
+      Caption         =   $"frmAbout.frx":0A51
       ForeColor       =   &H00000000&
       Height          =   825
       Left            =   135
       TabIndex        =   3
       Tag             =   "Warning: ..."
       Top             =   3345
-      Width           =   3990
+      Width           =   4590
    End
 End
 Attribute VB_Name = "frmAbout"
@@ -270,3 +270,4 @@ GetKeyError:    ' Cleanup After An Error Has Occured...
         GetKeyValue = False                                     ' Return Failure
         rc = RegCloseKey(hKey)                                  ' Close Registry Key
 End Function
+

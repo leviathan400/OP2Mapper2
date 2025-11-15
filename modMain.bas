@@ -533,7 +533,7 @@ With fMainForm
     .cMenu.ItemIcon("mnuFileOpen") = 12
     .cMenu.ItemIcon("mnuFileSave") = 13
     .cMenu.ItemIcon("mnuFileProperties") = 15
-    .cMenu.ItemIcon("mnuFilePrint") = 19
+    '.cMenu.ItemIcon("mnuFilePrint") = 19
     .cMenu.ItemIcon("mnuEditUndo") = 8
     '.cMenu.ItemIcon("mnuEditCut") = 5
     .cMenu.ItemIcon("mnuEditCopy") = 6

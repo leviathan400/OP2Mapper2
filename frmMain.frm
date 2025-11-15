@@ -154,19 +154,6 @@ Begin VB.MDIForm frmMain
       Begin VB.Menu mnuFileBar2 
          Caption         =   "-"
       End
-      Begin VB.Menu mnuFilePageSetup 
-         Caption         =   "Page Set&up..."
-      End
-      Begin VB.Menu mnuFilePrintPreview 
-         Caption         =   "Print Pre&view"
-      End
-      Begin VB.Menu mnuFilePrint 
-         Caption         =   "&Print..."
-         Shortcut        =   ^P
-      End
-      Begin VB.Menu mnuFileBar3 
-         Caption         =   "-"
-      End
       Begin VB.Menu mnuFileSend 
          Caption         =   "&Generate Code..."
       End
