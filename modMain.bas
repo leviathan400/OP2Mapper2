@@ -316,6 +316,9 @@ Private Const MAXINT_2 = 32767
 
 
 Sub Main()
+    ' Program Load
+    ' MsgBox "Hello OP2Mapper"
+    
     On Error GoTo Augha
     numUnitDefs = -1: numWeaponDefs = -1
     'InitCommonControls
