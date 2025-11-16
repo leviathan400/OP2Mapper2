@@ -3,7 +3,7 @@ Object = "{CA5A8E1E-C861-4345-8FF8-EF0A27CD4236}#1.1#0"; "vbalTreeView6.ocx"
 Begin VB.Form frmEditMappings 
    BorderStyle     =   3  'Fixed Dialog
    Caption         =   "Tileset Editor"
-   ClientHeight    =   4695
+   ClientHeight    =   6360
    ClientLeft      =   45
    ClientTop       =   330
    ClientWidth     =   7200
@@ -21,22 +21,22 @@ Begin VB.Form frmEditMappings
    LinkTopic       =   "Form1"
    MaxButton       =   0   'False
    MinButton       =   0   'False
-   ScaleHeight     =   313
+   ScaleHeight     =   424
    ScaleMode       =   3  'Pixel
    ScaleWidth      =   480
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.Timer tmrAnim 
       Enabled         =   0   'False
-      Left            =   5160
-      Top             =   4200
+      Left            =   4680
+      Top             =   5880
    End
    Begin VB.CommandButton cmdDelete 
       Caption         =   "Delete"
       Height          =   375
       Left            =   1680
       TabIndex        =   7
-      Top             =   4200
+      Top             =   5880
       Width           =   1455
    End
    Begin VB.CommandButton cmdAdd 
@@ -44,12 +44,12 @@ Begin VB.Form frmEditMappings
       Height          =   375
       Left            =   120
       TabIndex        =   6
-      Top             =   4200
+      Top             =   5880
       Width           =   1455
    End
    Begin VB.Frame grpCurrentSettings 
       Caption         =   "Current Selection Settings"
-      Height          =   3375
+      Height          =   5055
       Left            =   3600
       TabIndex        =   4
       Top             =   120
@@ -59,7 +59,7 @@ Begin VB.Form frmEditMappings
          Height          =   375
          Left            =   360
          TabIndex        =   19
-         Top             =   2880
+         Top             =   4540
          Width           =   1455
       End
       Begin VB.ComboBox cboTileset 
@@ -75,7 +75,7 @@ Begin VB.Form frmEditMappings
          Height          =   375
          Left            =   1920
          TabIndex        =   15
-         Top             =   2880
+         Top             =   4540
          Width           =   1455
       End
       Begin VB.TextBox txtTileId 
@@ -113,7 +113,7 @@ Begin VB.Form frmEditMappings
       End
       Begin VB.TextBox txtTilesetInfo 
          BackColor       =   &H8000000F&
-         Height          =   3015
+         Height          =   4650
          Left            =   120
          Locked          =   -1  'True
          MultiLine       =   -1  'True
@@ -169,17 +169,17 @@ Begin VB.Form frmEditMappings
       Height          =   375
       Left            =   5640
       TabIndex        =   3
-      Top             =   4200
+      Top             =   5880
       Width           =   1455
    End
    Begin vbalTreeViewLib6.vbalTreeView tvMappings 
-      Height          =   3135
+      Height          =   4815
       Left            =   120
       TabIndex        =   0
       Top             =   360
       Width           =   3375
       _ExtentX        =   5953
-      _ExtentY        =   5530
+      _ExtentY        =   8493
       HotTracking     =   0   'False
       LineStyle       =   0
       SingleSel       =   -1  'True
@@ -200,8 +200,8 @@ Begin VB.Form frmEditMappings
       Height          =   495
       Left            =   120
       TabIndex        =   2
-      Top             =   3600
-      Width           =   6975
+      Top             =   5280
+      Width           =   6735
    End
    Begin VB.Label lblMappings 
       Caption         =   "All Tilesets/Mappings in Current Map:"

@@ -46,7 +46,7 @@ Begin VB.Form frmAbout
       HasDC           =   0   'False
       Height          =   480
       Left            =   240
-      Picture         =   "frmAbout.frx":0187
+      Picture         =   "frmAbout.frx":0186
       ScaleHeight     =   480
       ScaleMode       =   0  'User
       ScaleWidth      =   480
@@ -122,7 +122,7 @@ Begin VB.Form frmAbout
       Width           =   4575
    End
    Begin VB.Label lblDisclaimer 
-      Caption         =   $"frmAbout.frx":0A51
+      Caption         =   $"frmAbout.frx":0A50
       ForeColor       =   &H00000000&
       Height          =   825
       Left            =   135

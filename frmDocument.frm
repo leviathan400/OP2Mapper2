@@ -1623,6 +1623,8 @@ Close #f
 Unload frmGenUnitCode
 
 SetStatusBar "Code generated successfully."
+MsgBox "Code generated successfully."
+
 Exit Sub
 
 oops:

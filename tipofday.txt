@@ -1,0 +1,10 @@
+Have fun with the Mapper :-)
+It's buggy, save often.
+If you find a bug please notify us.
+Have a good tip to share? Post it and it might end up in this file.
+Check www.outpost-universe.net often for new OP2 and Mapper related updates.
+Check the Wiki to learn how to create new tilesets.
+Right click the minimap if you want to save a picture of it.
+Right click editing windows: many contain right click menus to allow you to do different things.
+Click Generate Code on the File menu to generate a C++ file containing code for objects on the map.
+Some features don't work yet, they will be added in future updates!

@@ -5,7 +5,7 @@ Begin VB.Form frmGenUnitCode
    ClientHeight    =   2535
    ClientLeft      =   45
    ClientTop       =   330
-   ClientWidth     =   6495
+   ClientWidth     =   7965
    BeginProperty Font 
       Name            =   "Verdana"
       Size            =   8.25
@@ -21,14 +21,14 @@ Begin VB.Form frmGenUnitCode
    MaxButton       =   0   'False
    MinButton       =   0   'False
    ScaleHeight     =   2535
-   ScaleWidth      =   6495
+   ScaleWidth      =   7965
    ShowInTaskbar   =   0   'False
    StartUpPosition =   1  'CenterOwner
    Begin VB.CommandButton cmdCancel 
       Cancel          =   -1  'True
       Caption         =   "Cancel"
       Height          =   375
-      Left            =   3600
+      Left            =   5040
       TabIndex        =   5
       Top             =   2040
       Width           =   1335
@@ -37,7 +37,7 @@ Begin VB.Form frmGenUnitCode
       Caption         =   "Generate"
       Default         =   -1  'True
       Height          =   375
-      Left            =   5040
+      Left            =   6480
       TabIndex        =   4
       Top             =   2040
       Width           =   1335
@@ -47,7 +47,7 @@ Begin VB.Form frmGenUnitCode
       Left            =   2640
       TabIndex        =   3
       Top             =   1680
-      Width           =   3735
+      Width           =   5175
    End
    Begin VB.Frame grpCodeType 
       Caption         =   "Code Generation Template"
@@ -55,15 +55,15 @@ Begin VB.Form frmGenUnitCode
       Left            =   120
       TabIndex        =   1
       Top             =   600
-      Width           =   6255
+      Width           =   7695
       Begin VB.ComboBox cboTemplate 
          Height          =   315
-         Left            =   3000
+         Left            =   3600
          Style           =   2  'Dropdown List
          TabIndex        =   6
          ToolTipText     =   "Select a template to use when generating code."
          Top             =   240
-         Width           =   3135
+         Width           =   3975
       End
       Begin VB.Label lblNote 
          Caption         =   "Extra templates must be stored in the map editor's directory."
