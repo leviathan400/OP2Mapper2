@@ -301,8 +301,7 @@ These files collectively describe nearly all Outpost-2 related data needed to co
 
 # OP2Mapper2 – DAT File Format Specification
 
-This document describes the binary `.dat` file format produced by **OP2Mapper2** and used alongside Outpost 2 `.map` files.  
-The `.dat` file contains **unit placements**, **Gaia object placements**, and extra metadata needed by Mapper2 that is not stored in the `.map` tiles-only file.
+The binary `.dat` file format produced by **OP2Mapper2** and used alongside Outpost 2 `.map` files. The `.dat` file contains **unit placements**, **Gaia object placements**, and extra metadata for OP2Mapper2 that is not stored in the `.map` tiles and cell type file. Is is generated when using the 'Place Object' function.
 
 ---
 
@@ -313,7 +312,7 @@ Outpost 2 uses two files for a map:
 | File | Purpose |
 |------|---------|
 | `*.map` | Tilemap (terrain tiles, cell types of tiles) |
-| `*.map.dat` | Unit placements, Gaia objects, and attributes |
+| `*.dat` | Unit placements, Gaia objects, and attributes |
 
 Mapper2 maintains its own `.dat` format, which is **not the same** as the Outpost 2 mission DLL format.  It is a lightweight OP2Mapper2-era binary structure.
 
