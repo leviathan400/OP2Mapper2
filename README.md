@@ -32,7 +32,7 @@ OP2Mapper2 has three special file formats, .ctl, .tpl and .dat
 
 # OP2Mapper2 – CTL File Format Specification
 
-This document explains the file format and purpose of the **CTL** files used by **OP2Mapper2**.
+The following explains the file format and purpose of the `.ctl` files used by OP2Mapper2.
 
 ---
 
@@ -49,7 +49,7 @@ These files allow the mapper to interpret `.map` and `.dat` contents in a way th
 
 ---
 
-# General CTL Conventions
+## General CTL Conventions
 
 ### **Comments**
 Lines beginning with `;` are ignored.
@@ -93,7 +93,7 @@ Defines all **non-Gaia** units:
 - Vehicles (Cargo Truck, Convec, Miner, Scouts, Combat Vehicles)
 - Turrets as units (for mapper placement)
 
-These match `.map.dat` entries where `IsGaia = False`.
+These match `.dat` entries where `IsGaia = False`.
 
 ### **Format**
 Depending on unit type, the number of fields varies:
@@ -132,7 +132,7 @@ MapID,"WeaponName",ArtID
 
 | Field         | Meaning                           |
 |---------------|-----------------------------------|
-| **MapID**     | Weapon ID used in `.map.dat`      |
+| **MapID**     | Weapon ID used in `.dat`      |
 | **WeaponName**| Display name                      |
 | **ArtID**     | Tile index for mapper             |
 
@@ -160,7 +160,7 @@ Defines all **Gaia (neutral) objects**, such as:
 - Rubble, wreckage, tech artifacts
 - Other map-placed special tiles
 
-These are used when `.map.dat` entries have `IsGaia = True`.
+These are used when `.dat` entries have `IsGaia = True`.
 
 ### **Format**
 Several variants are permitted:
@@ -255,38 +255,38 @@ Mapper2 uses this CTL to keep the correct tile variant for each terrain type.
 
 ---
 
-# `.dat` Interaction Summary
+## `.dat` Interaction Summary
 
 When loading `.dat`:
 
 ### **Non-Gaia units (`IsGaia=False`)**
 Resolved via:
 ```
-units.ctl ? UnitDefs[MapID]
+units.ctl: UnitDefs[MapID]
 ```
 
 ### **Gaia objects (`IsGaia=True`)**
 Resolved via:
 ```
-objects.ctl ? Objects[MapID + Extras]
+objects.ctl: Objects[MapID + Extras]
 ```
 
 ### **Weapons**
 Resolved via:
 ```
-weapons.ctl ? Weapons[WeaponMapID]
+weapons.ctl: Weapons[WeaponMapID]
 ```
 Plus turret flags applied to UnitDefs.
 
 ### **Terrain tiles**
 Determined via:
 ```
-terrains.ctl ? terrain ranges and special tile indices
+terrains.ctl: terrain ranges and special tile indices
 ```
 
 ---
 
-# Summary Table
+## Summary Table
 
 | CTL file        | Purpose                                       | Used for resolving                     |
 |-----------------|-----------------------------------------------|-----------------------------------------|
@@ -295,17 +295,18 @@ terrains.ctl ? terrain ranges and special tile indices
 | `objects.ctl`   | Gaia objects (beacons, walls, tubes, etc.)    | `MapID + Extra1/2/3`                    |
 | `terrains.ctl`  | Terrain types & tile index ranges             | Tile index + terrain type               |
 
-These files collectively describe nearly all Outpost-2 related data needed to correctly interpret and edit a map.
+These files collectively describe nearly all Outpost 2 related data needed to correctly interpret and edit a map.
+
 
 
 
 # OP2Mapper2 – DAT File Format Specification
 
-The binary `.dat` file format produced by **OP2Mapper2** and used alongside Outpost 2 `.map` files. The `.dat` file contains **unit placements**, **Gaia object placements**, and extra metadata for OP2Mapper2 that is not stored in the `.map` tiles and cell type file. Is is generated when using the 'Place Object' function.
+The binary `.dat` file format produced by OP2Mapper2 and used alongside Outpost 2 `.map` files. The `.dat` file contains unit placements, Gaia object placements, and extra metadata for OP2Mapper2 that is not stored in the `.map` tiles and cell type file. Is is generated when using the 'Place Object' function.
 
 ---
 
-# Overview
+## Overview
 
 Outpost 2 uses two files for a map:
 
@@ -314,11 +315,11 @@ Outpost 2 uses two files for a map:
 | `*.map` | Tilemap (terrain tiles, cell types of tiles) |
 | `*.dat` | Unit placements, Gaia objects, and attributes |
 
-Mapper2 maintains its own `.dat` format, which is **not the same** as the Outpost 2 mission DLL format.  It is a lightweight OP2Mapper2-era binary structure.
+OP2Mapper2 maintains its own `.dat` format, which is not the same as the Outpost 2 mission DLL format.  It is a lightweight OP2Mapper2-era binary structure.
 
 ---
 
-# High-Level Structure
+## High-Level Structure
 
 The `.dat` file contains:
 
@@ -334,7 +335,7 @@ Where each record is a **fixed binary struct**, optionally extended for Gaia obj
 
 ---
 
-# Binary Record Format
+## Binary Record Format
 
 Each record is:
 
@@ -370,7 +371,7 @@ The file begins with a **4-byte Int32 count**, so full size is:
 
 ---
 
-# Detailed Field Semantics
+## Detailed Field Semantics
 
 ## `LocX`, `LocY`
 
@@ -428,7 +429,7 @@ Often used to distinguish terrain-specific variants.
 
 ---
 
-# Example Binary Layout (hex)
+## Example Binary Layout (hex)
 
 A *single non-Gaia unit*:
 
@@ -457,7 +458,7 @@ FF FF         Extra3 = -1
 
 ---
 
-# Parsing Rules
+## Parsing Rules
 
 ### Step 1 — Read number of records
 
@@ -481,12 +482,12 @@ count = br.ReadInt32()
 
 ---
 
-# Relationship Between `.map` and `.map.dat`
+## Relationship Between `.map` and `.dat`
 
 | File | Contains |
 |------|----------|
 | `.map` | Terrain only (tile IDs, 512×512) |
-| `.map.dat` | All units, Gaia objects, weapons, extra attributes |
+| `.dat` | All units, Gaia objects, weapons, extra attributes |
 
 Both are required for a functional Outpost 2 mission map.
 
