@@ -78,7 +78,7 @@ Private Sub Form_Load()
 Me.Left = GetSettingIni("Window", "CellEditLeft", 0)
 Me.TOp = GetSettingIni("Window", "CellEditTop", 0)
 Me.Width = GetSettingIni("Window", "CellEditWidth", 2400)
-Me.Height = GetSettingIni("Window", "CellEditHeight", 4110)
+Me.Height = GetSettingIni("Window", "CellEditHeight", 6800)
 Me.WindowState = GetSettingIni("Window", "CellEditWindowState", 0)
 
 'Populate the list and lookup table with celltypes
