@@ -24,17 +24,15 @@ The backend code uses OP2Editor: https://github.com/OutpostUniverse/OP2Editor
 
 OP2Mapper2 has three special file formats, .ctl, .tpl and .dat
 
-**.ctl** - Object definitions
-**.tpl** - Code generation template
-**.dat** - Contains unit placem and object placements
+- **.ctl** - Object definitions
+- **.tpl** - Code generation template
+- **.dat** - Contains unit placem and object placements
 
 
 
 # OP2Mapper2 – CTL File Format Specification
 
-This document explains the file format and purpose of the **CTL** files used by **OP2Mapper2**, the classic VB6 Outpost 2 map editor.
-
-Only the CTL files related to Outpost 2 game data are included here (`units.ctl`, `weapons.ctl`, `objects.ctl`, `terrains.ctl`).
+This document explains the file format and purpose of the **CTL** files used by **OP2Mapper2**.
 
 ---
 
@@ -87,7 +85,7 @@ The meaning of fields depends on the CTL type.
 
 ---
 
-# `units.ctl` — Standard Outpost 2 Unit Definitions
+## `units.ctl` — Standard Outpost 2 Unit Definitions
 
 Defines all **non-Gaia** units:
 
@@ -123,7 +121,7 @@ MapID,"Name",Width,Height,VerTubeLoc,HorTubeLoc,ArtID
 
 ---
 
-# `weapons.ctl` — Weapon Definitions & Turret Compatibility
+## `weapons.ctl` — Weapon Definitions & Turret Compatibility
 
 Has two roles:
 
@@ -151,7 +149,7 @@ UnitDefs(UnitMapID).CanHaveTurret = True
 
 ---
 
-# `objects.ctl` — Gaia Objects / Special Map Features
+## `objects.ctl` — Gaia Objects / Special Map Features
 
 Defines all **Gaia (neutral) objects**, such as:
 
@@ -211,7 +209,7 @@ MapID + Extra1 + Extra2 + Extra3
 
 ---
 
-# `terrains.ctl` — Terrain Types & Tile Ranges
+## `terrains.ctl` — Terrain Types & Tile Ranges
 
 This file defines **how tile indices (0–2011)** map to **terrain types** for a given tileset.
 
@@ -257,9 +255,9 @@ Mapper2 uses this CTL to keep the correct tile variant for each terrain type.
 
 ---
 
-# `.map.dat` Interaction Summary
+# `.dat` Interaction Summary
 
-When loading `.map.dat`:
+When loading `.dat`:
 
 ### **Non-Gaia units (`IsGaia=False`)**
 Resolved via:
@@ -509,3 +507,4 @@ The OP2Mapper2 `.dat` format is:
 | Header | Number of records |
 | Records | Units and Gaia objects |
 | Extras | Gaia parameter fields |
+
