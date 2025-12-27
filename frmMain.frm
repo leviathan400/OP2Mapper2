@@ -657,14 +657,51 @@ End If
 End Sub
 
 Private Sub mnuViewStartOP2_Click()
+' Old code:
+' Shell ResMan.RootPath & "\Outpost2.exe", vbNormalFocus
+
 On Error GoTo oops
-'Run OP2 exe
-SetStatusBar "Starting Outpost 2..."
-Shell ResMan.RootPath & "\Outpost2.exe", vbNormalFocus
-SetStatusBar "Ready"
-Exit Sub
+' Run OPULauncher.exe (1.4.1)
+
+    Dim RetVal As Long
+    Dim launcherPath As String
+    Dim launcherDir As String
+    Dim currentDir As String
+    
+    SetStatusBar "Starting Outpost 2..."
+    
+    ' Save current directory
+    currentDir = CurDir
+    
+    ' Set paths
+    launcherPath = ResMan.RootPath & "\OPU\OPULauncher.exe"
+    launcherDir = ResMan.RootPath & "\OPU"
+    
+    ' Change to the launcher's directory
+    ChDrive Left(launcherDir, 1)
+    ChDir launcherDir
+    
+    ' Run the launcher (From its own folder)
+    Dim objShell As Object
+    Set objShell = CreateObject("WScript.Shell")
+    RetVal = objShell.Run("""" & launcherPath & """", 1, True) ' 1 = normal window, True = wait
+    Set objShell = Nothing
+    
+    ' Restore original directory
+    ChDrive Left(currentDir, 1)
+    ChDir currentDir
+    
+    SetStatusBar "Ready"
+    Exit Sub
+    
 oops:
-GenerateError "Could not start Outpost2.exe", "fMainForm::mnuViewStartOP2_Click"
+    ' Restore directory even on error
+    On Error Resume Next
+    ChDrive Left(currentDir, 1)
+    ChDir currentDir
+    On Error GoTo 0
+    
+    GenerateError "Could not start OPULauncher.exe (Outpost 2)", "fMainForm::mnuViewStartOP2_Click"
 End Sub
 
 Private Sub mnuWindowArrangeIcons_Click()

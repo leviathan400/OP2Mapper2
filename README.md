@@ -2,7 +2,7 @@
 
 ![Screenshot](https://wiki.outpost2.net/lib/exe/fetch.php?cache=&w=500&h=426&tok=19109a&media=outpost_2:helper_programs:mapper_screenshot.png)
 
-Created by BlackBox and Hooman
+The first full featured Outpost 2 map editor created by BlackBox and Hooman
 
 https://wiki.outpost2.net/doku.php?id=outpost_2:helper_programs:mapper
 
@@ -16,8 +16,8 @@ Visual Basic 6.0 project
 Source code is from OP2Mapper2-source.rar (Modified date 13/09/2006). This was marked as 2.2.4 in the project file.
 
 
-The backend code uses OP2Editor: https://github.com/OutpostUniverse/OP2Editor
-
+The backend code uses [OP2Editor](https://github.com/OutpostUniverse/OP2Editor)
+ 
 
 
 # File Formats
@@ -26,7 +26,7 @@ OP2Mapper2 has three special file formats, .ctl, .tpl and .dat
 
 - **.ctl** - Object definitions
 - **.tpl** - Code generation template
-- **.dat** - Contains unit placem and object placements
+- **.dat** - Contains unit placement and object placements
 
 
 
@@ -45,7 +45,7 @@ OP2Mapper2 uses several `.ctl` data files to understand:
 - objects.ctl - Gaia objects (beacons, fumaroles, walls, tubes, etc.)
 - terrains.ctl - Terrain type definitions and tile index ranges inside Outpost 2 tilesets
 
-These files allow the mapper to interpret `.map` and `.dat` contents in a way that matches Outpost 2’s internal game logic.
+These files allow the mapper to interpret `.map` and `.dat` contents in a way that matches Outpost 2's internal game logic.
 
 ---
 
@@ -300,9 +300,249 @@ These files collectively describe nearly all Outpost 2 related data needed to co
 
 
 
+# OP2Mapper2 – TPL File Format Specification
+
+The `.tpl` (template) file format is used by OP2Mapper2 to generate C++ mission code from placed map objects. Templates define how unit placements, beacons, walls, and other objects are converted into executable Outpost 2 mission scripts.
+
+---
+
+## Overview
+
+OP2Mapper2 uses `.tpl` files to:
+
+- Generate mission initialization code from map data
+- Create unit placement functions
+- Support multiple code generation styles (simple placement, full mission DLLs, etc.)
+- Allow customizable output formats via template substitution
+
+When the user generates code from the mapper, the selected template processes all unit records and produces formatted C++ code.
+
+---
+
+## Template Structure
+
+A `.tpl` file is divided into **sections** marked by special keywords starting with `$$`. The parser operates as a finite state machine, switching between states as it encounters these keywords.
+
+### **Section Keywords**
+
+| Keyword | Purpose |
+|---------|---------|
+| `$$rem` | Comment line (ignored) |
+| `$$begin` | Start of prolog (code before any unit generation) |
+| `$$end` | Start of epilog (code after all unit generation) |
+| `$$player` | Start of per-player prolog |
+| `$$endplayer` | Start of per-player epilog |
+| `$$unit` | Template line for regular units (structures, vehicles) |
+| `$$beacon` | Template line for beacon objects |
+| `$$wall` | Template line for wall/tube objects |
+| `$$wreck` | Template line for wreckage objects |
+
+---
+
+## Template Variables
+
+Templates use placeholder variables that are replaced with actual values during code generation. Variables are prefixed with `$`.
+
+### **Global Variables**
+
+Available in all sections:
+
+| Variable | Replaced With |
+|----------|---------------|
+| `$totalunits` | Total number of objects placed on map |
+| `$playersused` | Number of players used (0-6) |
+| `$template` | Name of the template file |
+| `$mapname` | Name of the map file |
+| `$gaiaunits` | Number of Gaia (neutral) objects |
+
+### **Player-Specific Variables**
+
+Available in `$$player`, `$$endplayer`, and `$$unit` sections:
+
+| Variable | Replaced With |
+|----------|---------------|
+| `$playerid` | Current player number (0-6) |
+| `$playerunits` | Number of units belonging to this player |
+
+### **Unit-Specific Variables**
+
+Available in `$$unit`, `$$beacon`, `$$wall`, and `$$wreck` sections:
+
+| Variable | Replaced With |
+|----------|---------------|
+| `$mapid` | Unit's MapID from units.ctl or objects.ctl |
+| `$weaponmapid` | Weapon MapID (0 if none) |
+| `$x` | X coordinate (adjusted: `locX + 1`) |
+| `$y` | Y coordinate (adjusted: `locY + 1`) |
+| `$extra1` | Gaia object Extra1 parameter |
+| `$extra2` | Gaia object Extra2 parameter |
+| `$extra3` | Gaia object Extra3 parameter |
+
+---
+
+## Code Generation Flow
+
+1. **Parse template file** - Read all sections into memory
+2. **Generate file header** - Version info and stats comment
+3. **Output prolog** - Code before units (function declaration, includes, etc.)
+4. **Process Gaia objects** - Output all beacons, walls, wreckage first
+5. **Process player units** - Loop through each player (0 to playersUsed-1):
+   - Output player prolog
+   - Output all units for this player
+   - Output player epilog
+6. **Output epilog** - Code after units (function closing brace, etc.)
+
+---
+
+## Template Examples
+
+### **Simple Unit Placement Template**
+
+```cpp
+$$rem Default template for C++ based DLLs
+$$begin
+void SetupUnits()
+{
+	// Create OP2Mapper generated units
+	Unit x;
+$$unit
+	TethysGame::CreateUnit(x, $mapid, LOCATION($x+31, $y-1), $playerid, $weaponmapid, 0);
+$$end
+}
+```
+
+**Generated Output:**
+```cpp
+// Generated by OP2Mapper 2.2.4
+// at 12/26/2025 10:30:00 AM
+// using template Default.tpl
+// Total Number of Objects: 15
+
+void SetupUnits()
+{
+	// Create OP2Mapper generated units
+	Unit x;
+	TethysGame::CreateUnit(x, 28, LOCATION(64, 32), 0, 0, 0);
+	TethysGame::CreateUnit(x, 1, LOCATION(65, 33), 0, 0, 0);
+	// ... more units ...
+}
+```
+
+### **Full Mission Template with Player Iteration**
+
+```cpp
+$$begin
+void SetupObjects()
+{
+	// Create OP2Mapper generated objects
+	Unit x;
+$$player
+	if (TethysGame::NoPlayers() > $playerid)
+	{
+$$unit
+		TethysGame::CreateUnit(x, (map_id)$mapid, LOCATION($x+31, $y-1), $playerid, (map_id)$weaponmapid, 0);
+$$beacon
+	TethysGame::CreateBeacon((map_id)$mapid, $x+31, $y-1, $extra1, $extra2, $extra3);
+$$wall
+	TethysGame::CreateWallOrTube($x+31, $y-1, $extra1, (map_id)$mapid);
+$$wreck
+	TethysGame::CreateWreck($x+31, $y-1, (map_id)$extra1, $extra2);
+$$endplayer
+	}
+$$end
+}
+```
+
+**Generated Output:**
+```cpp
+// Generated by OP2Mapper 2.2.4
+// at 12/26/2025 10:30:00 AM
+// using template Default.tpl
+// Total Number of Objects: 20
+
+void SetupObjects()
+{
+	// Create OP2Mapper generated objects
+	Unit x;
+	TethysGame::CreateBeacon((map_id)81, 95, 47, 0, 2, -1);
+	TethysGame::CreateWallOrTube(100, 50, 0, (map_id)18);
+	if (TethysGame::NoPlayers() > 0)
+	{
+		TethysGame::CreateUnit(x, (map_id)28, LOCATION(64, 32), 0, (map_id)0, 0);
+		TethysGame::CreateUnit(x, (map_id)1, LOCATION(65, 33), 0, (map_id)0, 0);
+	}
+	if (TethysGame::NoPlayers() > 1)
+	{
+		TethysGame::CreateUnit(x, (map_id)28, LOCATION(128, 64), 1, (map_id)0, 0);
+	}
+}
+```
+
+---
+
+## Coordinate Adjustments
+
+Note that coordinates in templates use adjustments:
+
+- `$x+31` and `$y-1` appear in the default templates
+- These compensate for differences between editor coordinate space and game coordinate space
+- The parser actually outputs `locX + 1` and `locY + 1` for `$x` and `$y`
+- So `$x+31` becomes `(locX + 1) + 31 = locX + 32` in the final output
+
+---
+
+## Creating Custom Templates
+
+To create a custom template:
+
+1. **Define the structure** - Decide what sections you need
+2. **Add section markers** - Use `$$begin`, `$$player`, `$$unit`, etc.
+3. **Insert variables** - Use `$` placeholders where values should be substituted
+4. **Test generation** - Load in OP2Mapper2 and generate code
+5. **Verify output** - Check that generated C++ compiles correctly
+
+### **Template Best Practices**
+
+- Always include `$$begin` and `$$end` sections
+- Use `$$player` / `$$endplayer` for per-player code
+- Include proper C++ syntax (braces, semicolons, etc.)
+- Test with maps containing different object types
+- Document any special coordinate adjustments
+
+---
+
+## Parser Implementation Notes
+
+The template parser in `modParsers.bas`:
+
+- Uses a finite state machine (`UnitTplMode` enum)
+- Processes line-by-line
+- Performs string replacement for all `$` variables
+- Handles Gaia objects separately before player units
+- Generates output in a specific order: header ? prolog ? Gaia objects ? player loops ? epilog
+
+---
+
+## Summary
+
+`.tpl` files enable flexible code generation in OP2Mapper2:
+
+| Feature | Purpose |
+|---------|---------|
+| Section markers | Define code structure |
+| Variable substitution | Insert map data into templates |
+| State machine parser | Process templates sequentially |
+| Multiple object types | Handle units, beacons, walls, wreckage |
+| Player iteration | Generate per-player initialization |
+
+Templates transform visual map layouts into executable Outpost 2 mission code, making mission creation faster and less error-prone.
+
+
+
+
 # OP2Mapper2 – DAT File Format Specification
 
-The binary `.dat` file format produced by OP2Mapper2 and used alongside Outpost 2 `.map` files. The `.dat` file contains unit placements, Gaia object placements, and extra metadata for OP2Mapper2 that is not stored in the `.map` tiles and cell type file. Is is generated when using the 'Place Object' function.
+The binary `.dat` file format produced by OP2Mapper2 and used alongside Outpost 2 `.map` files. The `.dat` file contains unit placements, Gaia object placements, and extra metadata for OP2Mapper2 that is not stored in the `.map` tiles and cell type file. It is generated when using the 'Place Object' function.
 
 ---
 
@@ -507,4 +747,3 @@ The OP2Mapper2 `.dat` format is:
 | Header | Number of records |
 | Records | Units and Gaia objects |
 | Extras | Gaia parameter fields |
-

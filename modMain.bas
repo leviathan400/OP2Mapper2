@@ -314,10 +314,10 @@ Private Const MAXINT_2 = 32767
 
 'Public tileMan As New TileSetManager
 
-
 Sub Main()
     ' Program Load
     ' MsgBox "Hello OP2Mapper"
+    Call CheckForUpdate("227", "https://raw.githubusercontent.com/leviathan400/OP2Mapper2/refs/heads/main/version.txt", "https://github.com/leviathan400/OP2Mapper2/releases")
     
     On Error GoTo Augha
     numUnitDefs = -1: numWeaponDefs = -1
@@ -511,7 +511,7 @@ mainIml.Create
 Dim hImg As Picture
 Set hImg = LoadResPicture(101, vbResBitmap)
 mainIml.AddFromHandle hImg.handle, IMAGE_BITMAP, , &HFF00FF
-Set hImg = LoadResPicture(90, vbResIcon)
+Set hImg = LoadResPicture(90, vbResIcon)   ' Outpost 2 Original Icon
 mainIml.AddFromHandle hImg.handle, IMAGE_ICON
 Set hImg = Nothing
 

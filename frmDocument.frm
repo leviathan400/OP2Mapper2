@@ -476,6 +476,7 @@ Select Case MsgBox("Do you want to save changes to " & myName & "?", vbQuestion 
         cancel = True: Exit Sub
 End Select
 myRebar.RemoveAllRebarBands
+fMainForm.sbStatusBar.PanelText("cords") = ""
 
 'Unsubclass the scrollbars and MDI message
 DetachMessage Me, hsbScroll.hWnd, WM_KEYDOWN
